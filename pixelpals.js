@@ -1,13 +1,22 @@
+// Get original request headers
+const originalHeaders = $request.headers;
+
 const options = {
     url: "https://api.revenuecat.com/v1/product_entitlement_mapping",
     headers: {
-        'Authorization': $request.headers["Authorization"] || $request.headers["authorization"],
+        'Authorization': originalHeaders["Authorization"] || originalHeaders["authorization"],
         'X-Platform': 'iOS',
-        'User-Agent': $request.headers["User-Agent"] || $request.headers["user-agent"]
+        'User-Agent': originalHeaders["User-Agent"] || originalHeaders["user-agent"]
     }
 };
 
 $httpClient.get(options, function(error, response, data) {
+    if (error) {
+        console.log("Error: " + error);
+        $done({});
+        return;
+    }
+    
     const ent = JSON.parse(data);
     
     let jsonToUpdate = {
@@ -57,5 +66,6 @@ $httpClient.get(options, function(error, response, data) {
         }
     }
     
+    // Return modified response
     $done({ body: JSON.stringify(jsonToUpdate) });
 });
