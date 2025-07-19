@@ -14,7 +14,15 @@ $httpClient.get(options, function(error, response, data) {
         return;
     }
     
-    const ent = JSON.parse(data);
+    let ent;
+    try {
+        ent = JSON.parse(data);
+        console.log("Parsed data:", JSON.stringify(ent));
+    } catch (parseError) {
+        console.log("JSON parse error:", parseError);
+        $done({});
+        return;
+    }
     
     let jsonToUpdate = {
         "request_date_ms": 1704070861000,
@@ -35,6 +43,14 @@ $httpClient.get(options, function(error, response, data) {
     };
     
     const productEntitlementMapping = ent.product_entitlement_mapping;
+    
+    // Check if productEntitlementMapping exists and is not null
+    if (!productEntitlementMapping) {
+        console.log("product_entitlement_mapping is null or undefined");
+        console.log("Available keys in response:", Object.keys(ent));
+        $done({ body: JSON.stringify(jsonToUpdate) });
+        return;
+    }
     
     for (const [entitlementId, productInfo] of Object.entries(productEntitlementMapping)) {
         const productIdentifier = productInfo.product_identifier;
