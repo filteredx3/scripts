@@ -1,12 +1,9 @@
-// Get original request headers
-const originalHeaders = $request.headers;
-
 const options = {
     url: "https://api.revenuecat.com/v1/product_entitlement_mapping",
     headers: {
-        'Authorization': originalHeaders["Authorization"] || originalHeaders["authorization"],
+        'Authorization': 'Bearer your_token_here', // You'll need to hardcode this or get it another way
         'X-Platform': 'iOS',
-        'User-Agent': originalHeaders["User-Agent"] || originalHeaders["user-agent"]
+        'User-Agent': 'RevenueCat/1.0 iOS'
     }
 };
 
