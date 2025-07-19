@@ -1,8 +1,5 @@
-// AutoRC.js adapté pour Loon
-// Type : http-response script
-
-module.exports = async (loon) => {
-  const requestHeaders = loon.request.headers;
+(async function() {
+  const requestHeaders = $request.headers;
 
   const options = {
     method: 'GET',
@@ -13,8 +10,8 @@ module.exports = async (loon) => {
     }
   };
 
-  const productEntitlementResp = await fetch('https://api.revenuecat.com/v1/product_entitlement_mapping', options);
-  const ent = await productEntitlementResp.json();
+  const response = await fetch('https://api.revenuecat.com/v1/product_entitlement_mapping', options);
+  const ent = await response.json();
 
   const productEntitlementMapping = ent.product_entitlement_mapping;
 
@@ -62,6 +59,5 @@ module.exports = async (loon) => {
     }
   }
 
-  loon.response.body = JSON.stringify(jsonToUpdate);
-  return loon.response;
-};
+  $done({ body: JSON.stringify(jsonToUpdate) });
+})();
