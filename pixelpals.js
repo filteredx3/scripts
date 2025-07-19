@@ -1,11 +1,9 @@
-var request = $request;
-
 const options = {
     url: "https://api.revenuecat.com/v1/product_entitlement_mapping",
     headers: {
-        'Authorization': request.headers["authorization"],
+        'Authorization': $request.headers["Authorization"] || $request.headers["authorization"],
         'X-Platform': 'iOS',
-        'User-Agent': request.headers["user-agent"]
+        'User-Agent': $request.headers["User-Agent"] || $request.headers["user-agent"]
     }
 };
 
