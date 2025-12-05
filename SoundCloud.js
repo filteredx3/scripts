@@ -62,7 +62,7 @@ obj.features = [
     },
     {
       "name" : "spotlight",
-      "enabled" : false,
+      "enabled" : true,
       "plans" : [
 
       ]
